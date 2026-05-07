@@ -1,6 +1,6 @@
 function compress() {
-    const inputArea = document.getElementById('input');
-    const outputArea = document.getElementById('output');
+    const inputArea = document.getElementById('caveman-input') || document.getElementById('input');
+    const outputArea = document.getElementById('caveman-output') || document.getElementById('output');
     const input = inputArea.value.trim();
 
     if (!input) {
@@ -132,20 +132,20 @@ function caveman(text) {
 }
 
 function updateStats() {
-    const inputArea = document.getElementById('input');
-    const outputArea = document.getElementById('output');
+    const inputArea = document.getElementById('caveman-input') || document.getElementById('input');
+    const outputArea = document.getElementById('caveman-output') || document.getElementById('output');
     const input = inputArea.value;
     const output = outputArea.value;
 
     const inputTokens = estimateTokens(input);
     const outputTokens = estimateTokens(output);
-    const ratio = inputTokens > 0 ? Math.round((outputTokens / inputTokens) * 100) : 0;
+    const ratio = inputTokens > 0 ? Math.round((1 - outputTokens / inputTokens) * 100) : 0;
     const savings = Math.max(0, inputTokens - outputTokens) * 0.015; // 대략 $0.015 per token
 
     document.getElementById('inputTokens').textContent = inputTokens;
     document.getElementById('outputTokens').textContent = outputTokens;
     document.getElementById('ratio').textContent = ratio + '%';
-    document.getElementById('savings').textContent = '₩' + Math.round(savings * 1200); // 환율 1200
+    document.getElementById('savings').textContent = '₩' + Math.round(savings * 1200);
 }
 
 function estimateTokens(text) {
