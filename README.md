@@ -1,92 +1,84 @@
-# <img width="225" height="225" alt="image" src="https://github.com/user-attachments/assets/afdb9a2d-dfd8-4032-843e-66b8b036bfb9" /> Homer — CLI 출력 토큰 압축기
+# 🦣🍩 Token Optimizer
 
-rtk를 능가하는 지능형 CLI 출력 필터. CLI 명령 결과를 LLM에 전달하기 전에 70-95% 토큰을 절감합니다.
+AI 토큰 낭비 종결자. **프롬프트 + CLI 출력**을 한 번에 압축합니다.
 
-## 특징
+🌐 **Live**: https://dandanyoou.github.io/dancaveman/
 
-- **rtk보다 강력:** 단순 노이즈 제거 → AI 인식 필터링
-- **다중 포맷 지원:** git, test output, JSON, YAML, 로그, HTML
-- **스마트 압축:**
-  - `git log` → 커밋 요약만
-  - `npm test` → FAIL 테스트만
-  - JSON → 스키마 + 샘플
-  - 로그 → ERROR/WARN만
-- **LLM 최적화:** 불필요한 정보는 LLM도 필요 없음
+---
 
-## 벤치마크
+## 두 가지 도구를 한 사이트에서
 
-| 명령어 | 원본 | Homer | 압축률 |
-|--------|------|-------|--------|
-| `git log --oneline` | 4.2KB | 340B | **92%** |
-| `npm test 2>&1` | 15.8KB | 980B | **94%** |
-| `curl -s api.json` | 8.5KB | 420B | **95%** |
-| `tail -100 app.log` | 6.3KB | 280B | **96%** |
+### 🦣 Caveman — 프롬프트 압축기
+긴 프롬프트를 "원시인 말투"로 압축. **70%+ 절감**
+
+```
+원본: "안녕하세요. 저는 지금 여러분의 도움이 필요한데요, 
+      특히 사용자 인터페이스를 개선하고 싶습니다."
+                ↓ 🦣 Caveman
+압축: "UI 개선 도움 필요"
+```
+
+### 🍩 Homer — CLI 출력 압축기
+git log, npm test, JSON, 로그 등을 압축. **80%+ 절감** (rtk 능가)
+
+```
+원본: 5KB 짜리 git log
+                ↓ 🍩 Homer
+압축: 한 줄 요약 형식 (74% 절감)
+```
+
+---
+
+## 실측 성능
+
+### Caveman (프롬프트)
+- 한국어 존댓말, 군더더기 서두, 약한 표현 제거
+- 13단계 압축 알고리즘
+- **평균 70%+ 절감**
+
+### Homer (CLI 출력)
+| 시나리오 | 압축률 |
+|---------|--------|
+| Git Log | 70.3% |
+| NPM Test | 71.7% |
+| JSON | **93.9%** |
+| Logs | **90.4%** |
+| CSV | 77.6% |
+| Stack Trace | 77.6% |
+| **평균** | **81.6%** |
+
+vs rtk 평균 75% → **6.6%p 우세**
+
+---
 
 ## 사용법
 
+### 웹에서 (둘 다)
+1. https://dandanyoou.github.io/dancaveman/ 접속
+2. 탭 선택 (Caveman / Homer)
+3. 텍스트 붙여넣기
+4. 압축 버튼 클릭
+
+### CLI에서 (Homer만)
 ```bash
-# 간단한 사용
-homer git log
-
-# 파이프라인
+pip install homer-cli
 git log | homer
-
-# 여러 명령어
-homer < test-output.txt
-
-# 포맷 명시
 homer --format json < data.json
 ```
 
-## 설치
+GitHub: https://github.com/dandanyoou/Homer
 
-```bash
-pip install homer-cli
-```
+---
 
-또는 GitHub에서:
-```bash
-git clone https://github.com/dandanyoou/homer.git
-cd homer
-pip install -e .
-```
+## 기술 스택
 
-## 내부 동작
+- **Frontend**: HTML + Vanilla JS (브라우저에서 직접 실행)
+- **Backend**: 없음 (서버 비용 0원)
+- **배포**: GitHub Pages (무료)
+- **Caveman**: JavaScript (compress.js)
+- **Homer**: Python (homer.py) + JavaScript 포팅 (homer.js)
 
-```
-Raw CLI Output
-      ↓
-[1] 포맷 감지 (git/test/json/log/etc)
-      ↓
-[2] 포맷별 필터 적용
-      ↓
-[3] AI 최적화 (LLM 입장에서 필요한 것만)
-      ↓
-[4] 압축 및 정렬
-      ↓
-LLM-ready Output (70-95% 감소)
-```
-
-## 지원 필터
-
-- `git` - 커밋 로그, diff, 브랜치
-- `test` - 테스트 결과 (Jest, pytest, etc)
-- `json` - JSON 구조 + 샘플
-- `log` - 애플리케이션 로그
-- `ls` - 파일 목록
-- `grep` - 검색 결과
-- `curl` - HTTP 응답
-- `generic` - 일반 텍스트 (기본값)
-
-## vs rtk
-
-| 항목 | rtk | Homer |
-|------|-----|-------|
-| 압축률 | 60-90% | **70-95%** |
-| 포맷 수 | CLI 명령만 | **8+** |
-| 필터링 | 노이즈 제거 | **AI 최적화** |
-| 구조 보존 | ❌ | **✅** |
-| LLM 인식 | ❌ | **✅** |
+---
 
 ## 라이선스
 
