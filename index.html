@@ -248,10 +248,20 @@
 
         <!-- Caveman 탭 -->
         <div id="tab-caveman" class="tab-content active">
+            <div class="controls-row">
+                <label for="caveman-level">압축 강도:</label>
+                <select id="caveman-level">
+                    <option value="lite">Lite (군더더기만 제거, 문법 유지)</option>
+                    <option value="full" selected>Full (관사·주어 생략, 권장)</option>
+                    <option value="ultra">Ultra (전보체, 최대 압축)</option>
+                </select>
+                <span class="format-badge">한국어 + 영어 자동 감지</span>
+            </div>
+
             <div class="content">
                 <div class="section">
-                    <label for="caveman-input">원본 프롬프트</label>
-                    <textarea id="caveman-input" placeholder="긴 프롬프트를 여기 붙여넣으세요..."></textarea>
+                    <label for="caveman-input">원본 프롬프트 (한국어/영어)</label>
+                    <textarea id="caveman-input" placeholder="긴 프롬프트를 여기 붙여넣으세요... (한국어/영어 모두 지원)"></textarea>
                 </div>
                 <div class="section">
                     <label for="caveman-output">압축된 프롬프트</label>

@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "🦣🍩 Token Optimizer",
+  "version": "1.0.0",
+  "description": "AI 프롬프트와 CLI 출력을 자동 압축. ChatGPT/Claude에서 토큰 70%+ 절약.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "scripting",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "https://chat.openai.com/*",
+    "https://chatgpt.com/*",
+    "https://claude.ai/*",
+    "https://gemini.google.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*"
+      ],
+      "js": ["caveman.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "🦣🍩 Token Optimizer"
+  }
+}

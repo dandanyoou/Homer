@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Token Optimizer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            width: 360px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+        }
+
+        .section h2 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px 10px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            resize: vertical;
+            font-family: 'Monaco', monospace;
+            margin-bottom: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 4px;
+            border-radius: 4px;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            opacity: 0.8;
+            font-size: 10px;
+        }
+
+        .footer {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 11px;
+        }
+
+        .footer a {
+            color: white;
+            opacity: 0.85;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .shortcut {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-top: 8px;
+            font-family: 'Monaco', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🦣🍩 Token Optimizer</h1>
+        <p class="subtitle">AI 프롬프트 토큰 절약</p>
+
+        <div class="section">
+            <h2>⚙️ 압축 강도</h2>
+            <select id="level">
+                <option value="lite">Lite (군더더기만 제거)</option>
+                <option value="full" selected>Full (관사·주어 생략, 권장)</option>
+                <option value="ultra">Ultra (전보체, 최대 압축)</option>
+            </select>
+            <div class="shortcut">단축키: Ctrl+Shift+C (페이지에서)</div>
+        </div>
+
+        <div class="section">
+            <h2>🦣 빠른 압축</h2>
+            <textarea id="quick-input" placeholder="여기에 텍스트 붙여넣기..."></textarea>
+            <button id="compress-btn">압축하기</button>
+            <textarea id="quick-output" readonly placeholder="결과..." style="margin-top:8px;"></textarea>
+
+            <div class="stats" style="margin-top: 10px;">
+                <div class="stat">
+                    <div class="stat-value" id="orig-tokens">0</div>
+                    <div class="stat-label">원본</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="new-tokens">0</div>
+                    <div class="stat-label">압축</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="ratio">0%</div>
+                    <div class="stat-label">절감</div>
+                </div>
+            </div>
+
+            <button id="copy-btn" style="margin-top: 8px; background: rgba(255,255,255,0.3); color: white;">복사</button>
+        </div>
+
+        <div class="footer">
+            <a href="https://dandanyoou.github.io/dancaveman/" target="_blank">웹 버전 →</a>
+            &nbsp;|&nbsp;
+            <a href="https://github.com/dandanyoou/dancaveman" target="_blank">GitHub</a>
+        </div>
+    </div>
+
+    <script src="caveman.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

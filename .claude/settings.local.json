@@ -15,7 +15,9 @@
       "Bash(python -m pip install --upgrade build twine)",
       "Bash(python -m build)",
       "Bash(pip install *)",
-      "Bash(homer --format json --stats)"
+      "Bash(homer --format json --stats)",
+      "Bash(ls /c/Users/gimda/timetable/backend/ 2>&1 | head -20)",
+      "Bash(git stash *)"
     ]
   }
 }
