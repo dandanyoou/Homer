@@ -1,4 +1,5 @@
-# <img width="225" height="225" alt="image" src="https://github.com/user-attachments/assets/4210a623-57a9-4ef0-acb5-fe2000264870" /> Homer — CLI 출력 토큰 압축기
+# <img width="278" height="181" alt="image" src="https://github.com/user-attachments/assets/7f07ea8d-8e34-42f2-86cd-d5bb56260907" />
+ Homer — CLI 출력 토큰 압축기
 
 rtk를 능가하는 지능형 CLI 출력 필터. CLI 명령 결과를 LLM에 전달하기 전에 70-95% 토큰을 절감합니다.
 
