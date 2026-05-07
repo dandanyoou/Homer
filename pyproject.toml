@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "homer-cli"
+version = "0.2.0"
+description = "🍩 Homer - CLI 출력 토큰 압축기 (rtk 능가)"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "dandanyoou", email = "gimdanyu94@gmail.com"}
+]
+keywords = ["llm", "token", "compression", "cli", "ai", "claude", "gpt", "filter"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/dandanyoou/Homer"
+Repository = "https://github.com/dandanyoou/Homer"
+Issues = "https://github.com/dandanyoou/Homer/issues"
+
+[project.scripts]
+homer = "homer:main"
+
+[tool.setuptools]
+py-modules = ["homer"]
