@@ -19,71 +19,102 @@ function compress() {
 function caveman(text) {
     let result = text;
 
-    // 1단계: 존댓말 제거 및 불필요한 표현 정리
+    // [LEVEL 1] 군더더기 서두 완전 제거
     result = result
-        .replace(/\s*습니다\.?\s*/g, ' ') // 습니다 제거
-        .replace(/\s*합니다\.?\s*/g, ' ') // 합니다 제거
-        .replace(/\s*입니다\.?\s*/g, ' ') // 입니다 제거
-        .replace(/\s*있습니다\.?\s*/g, '') // 있습니다 제거
-        .replace(/\s*됩니다\.?\s*/g, ''); // 됩니다 제거
+        // 한국어 과도한 서두
+        .replace(/^.*?(제|우리|저는|이는|다음과 같이|먼저)\s+/gm, '')
+        .replace(/어떻게\s+(도움|설명|제시|말씀)드릴까.*?$/gm, '개요:')
+        // 영어 과도한 서두
+        .replace(/^sure,?\s+i'?d?\s+(be\s+happy\s+to|like\s+to|help\s+you|take\s+a\s+look)/gmi, '')
+        .replace(/^the\s+reason\s+(this\s+is|that\s+is)/gmi, '')
+        .replace(/^let\s+me\s+(explain|break\s+down|clarify)/gmi, '')
+        .replace(/^here'?s?\s+(my|the|a\s+brief|why)/gmi, '');
 
-    // 2단계: 불필요한 접속사 제거
+    // [LEVEL 2] 약한 표현/불확실성 제거
     result = result
-        .replace(/그리고\s*/g, '') // 그리고
-        .replace(/그런데\s*/g, '') // 그런데
-        .replace(/그래서\s*/g, '') // 그래서
-        .replace(/또한\s*/g, '') // 또한
-        .replace(/더불어\s*/g, '') // 더불어
-        .replace(/한편\s*/g, '') // 한편
-        .replace(/다만\s*/g, '') // 다만
-        .replace(/그럼\s*/g, '') // 그럼
-        .replace(/아울러\s*/g, ''); // 아울러
+        .replace(/\s*(혹시|아마|어쩌면|것\s+같다|것\s+같습니다|것\s+같은|것\s+같으면)\s*/g, ' ')
+        .replace(/\s*(어떨까\s+싶|어떨까\s+합)\s*/g, ' ')
+        .replace(/\s*(생각해\s+봅시다|봐야\s+합|봐야\s+할)\s*/g, ' ')
+        .replace(/\s*try\s+to\s*/gi, ' ')
+        .replace(/\s*might\s+want\s+to\s*/gi, ' ')
+        .replace(/\s*could\s+consider\s*/gi, ' ')
+        .replace(/\s*i\s+would\s+recommend\s+that\s+you\s*/gi, '');
 
-    // 3단계: 불필요한 수식어 제거
+    // [LEVEL 3] 존댓말/높임말 → 반말로
     result = result
-        .replace(/\s*매우\s*/g, ' ')
-        .replace(/\s*아주\s*/g, ' ')
-        .replace(/\s*특히\s*/g, ' ')
-        .replace(/\s*정말\s*/g, ' ')
-        .replace(/\s*바로\s*/g, ' ')
-        .replace(/\s*곧\s*/g, ' ');
+        .replace(/\s*(습니다|합니다|입니다|있습니다|됩니다|겠습니다|하겠습니다)\.?\s*/g, ' ')
+        .replace(/\s*(습니까|합니까|있습니까)\.?\s*/g, ' ')
+        .replace(/\s*(말씀드립니다|드립니다|말씀합니다)\.?\s*/g, ' ')
+        .replace(/\s*(하셔야|하세요|해야|하면)\s*/g, '하면 ');
 
-    // 4단계: 마크다운 형식 정리
+    // [LEVEL 4] 주어 생략 (caveman style)
+    result = result
+        .replace(/\b(저는|나는|우리는|이것은|이는|그것은|그는|그녀는|당신은)\s+/g, '')
+        .replace(/\b(i\s+am|i\s+have|we\s+are|this\s+is|it\s+is|you\s+are)\b/gi, '');
+
+    // [LEVEL 5] 불필요한 접속사 제거
+    result = result
+        .replace(/\s*(그리고|그런데|그래서|또한|더불어|한편|다만|그럼|아울러|따라서|그러므로)\s*/g, ' ')
+        .replace(/\s*(and|but|however|moreover|furthermore|nevertheless)\s*/gi, ' ')
+        .replace(/\s*,\s*/g, ' '); // 쉼표도 공백으로
+
+    // [LEVEL 6] 불필요한 수식어 제거
+    result = result
+        .replace(/\s*(매우|아주|정말|매우|상당히|좀|꽤|특히|바로|곧|거의|많이|좋게|나쁘게|완전히)\s*/g, ' ')
+        .replace(/\s*(very|really|quite|rather|extremely|absolutely|definitely)\s*/gi, ' ');
+
+    // [LEVEL 7] 이유/설명 문구 제거
+    result = result
+        .replace(/\s*(이유는|이유가|원인은|원인이|이유로는|이유로)\s*/g, ' ')
+        .replace(/\s*(때문에|때문입니다|까닭에|까닭입니다)\.?\s*/g, ' ')
+        .replace(/\s*(why.*?:\s*|because\s+|the\s+reason.*?is|due\s+to)\s*/gi, ' ');
+
+    // [LEVEL 8] 마크다운 형식 정리
     result = result
         .replace(/#{1,6}\s+/g, '') // # 제목
         .replace(/\*\*(.*?)\*\*/g, '$1') // 굵게
         .replace(/\*(.*?)\*/g, '$1') // 기울임
         .replace(/__(.*?)__/g, '$1') // 굵게 (언더스코어)
         .replace(/_(.*?)_/g, '$1') // 기울임 (언더스코어)
-        .replace(/\[(.*?)\]\((.*?)\)/g, '$1'); // 링크
+        .replace(/`{1,3}(.*?)`{1,3}/g, '$1') // 코드 블록은 유지
+        .replace(/\[(.*?)\]\((.*?)\)/g, '$1'); // 링크는 텍스트만
 
-    // 5단계: 공백 정리
+    // [LEVEL 9] 불필요한 마무리 표현
     result = result
-        .replace(/\s+/g, ' ') // 연속된 공백을 1개로
+        .replace(/\s*(참고\s+부탁|감사합니다|감사드립니다|알겠습니까|확인\s+부탁|궁금한\s+점|질문\s+있으시면)\.?\s*/g, '')
+        .replace(/\s*(thanks\s+for|let\s+me\s+know|feel\s+free\s+to|don'?t\s+hesitate|if\s+you.*?questions?)\s*/gi, '');
+
+    // [LEVEL 10] 공백 및 구조 정리
+    result = result
+        .replace(/\s+/g, ' ') // 연속 공백 → 1개
         .replace(/\s+([.,!?;:])/g, '$1') // 구두점 전 공백 제거
-        .replace(/([.,!?;:])\s+/g, '$1 '); // 구두점 후 공백 정리
+        .replace(/([.,!?;:])\s+/g, '$1 '); // 구두점 후 공백
 
-    // 6단계: 불필요한 개행 정리
+    // [LEVEL 11] 문장 분리 (개행)
     result = result
-        .replace(/\n\s*\n/g, '\n') // 빈 줄 제거
-        .replace(/\n/g, ' '); // 개행을 공백으로
-
-    // 7단계: 불필요한 설명문 줄이기
-    result = result
-        .replace(/\. /g, '.\n') // 문장 끝에서 개행
+        .replace(/([.!?])\s+(?=[가-힣A-Z])/g, '$1\n') // 문장 끝에서 개행
         .split('\n')
-        .map(line => line.trim())
-        .filter(line => line.length > 0)
+        .map(line => {
+            line = line.trim();
+            // 각 문장 내 불필요한 공백 정리
+            return line.replace(/\s+/g, ' ');
+        })
+        .filter(line => line.length > 3) // 너무 짧은 줄 제거 (3글자 이상)
         .join('\n');
 
-    // 8단계: 반복 문장 제거 (간단한 버전)
+    // [LEVEL 12] 반복 문장 제거
     const lines = result.split('\n');
     const uniqueLines = [];
     const seen = new Set();
 
     for (const line of lines) {
-        const simplified = line.toLowerCase().slice(0, 30); // 처음 30자로 비교
-        if (!seen.has(simplified)) {
+        // 한글과 영문 모두 처리
+        const simplified = line
+            .toLowerCase()
+            .replace(/[.,!?;:]/g, '') // 구두점 제거
+            .slice(0, 40); // 처음 40자 비교
+
+        if (!seen.has(simplified) && line.length > 0) {
             uniqueLines.push(line);
             seen.add(simplified);
         }
@@ -91,8 +122,11 @@ function caveman(text) {
 
     result = uniqueLines.join('\n');
 
-    // 9단계: 최종 공백 정리
-    result = result.trim();
+    // [LEVEL 13] 최종 정리
+    result = result
+        .trim()
+        .replace(/\n\s*\n/g, '\n') // 빈 줄 제거
+        .replace(/^\s*[-*•]\s+/gm, ''); // 불릿 포인트 제거
 
     return result;
 }
