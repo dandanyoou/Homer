@@ -1,0 +1,49 @@
+commit ba56f93f5d6a713ea2155831d7733794f3e5813e
+Merge: 8041815 701813e
+Author:     dandanyoou <gimdanyu94@gmail.com>
+AuthorDate: Thu May 7 20:52:01 2026 +0900
+Commit:     dandanyoou <gimdanyu94@gmail.com>
+CommitDate: Thu May 7 20:52:01 2026 +0900
+
+    resolve: merge conflict - keep Homer README
+
+commit 80418152c7d8613719c2c19f4f0d0ec2f1152ebd
+Author:     dandanyoou <gimdanyu94@gmail.com>
+AuthorDate: Thu May 7 20:51:06 2026 +0900
+Commit:     dandanyoou <gimdanyu94@gmail.com>
+CommitDate: Thu May 7 20:51:06 2026 +0900
+
+    init: Homer v0.1 - CLI 출력 압축기 (rtk 능가)
+
+commit 701813e5211a069e5ef32700b5d55f672eafcd7e
+Author:     dandanyoou <gimdanyu94@gmail.com>
+AuthorDate: Thu May 7 20:40:40 2026 +0900
+Commit:     dandanyoou <gimdanyu94@gmail.com>
+CommitDate: Thu May 7 20:40:40 2026 +0900
+
+    improve: caveman 압축 알고리즘 13단계로 강화 - 70% 이상 절감 목표
+
+commit 829b56423e6e15e177b2cf2ea3e8f7d057cdfe49
+Merge: 73092b8 4337d47
+Author:     dandanyoou <gimdanyu94@gmail.com>
+AuthorDate: Thu May 7 14:53:25 2026 +0900
+Commit:     dandanyoou <gimdanyu94@gmail.com>
+CommitDate: Thu May 7 14:53:25 2026 +0900
+
+    resolve: merge conflict in README.md
+
+commit 73092b8c074dfd415febd574f04b2dac8142c7f8
+Author:     dandanyoou <gimdanyu94@gmail.com>
+AuthorDate: Thu May 7 14:50:07 2026 +0900
+Commit:     dandanyoou <gimdanyu94@gmail.com>
+CommitDate: Thu May 7 14:50:07 2026 +0900
+
+    feat: caveman 프로토타입 v0.1 - 규칙 기반 프롬프트 압축
+
+commit 4337d471edb149d3bb923a7eb1c534fc4bf81492
+Author:     김단유 <57594790+dandanyoou@users.noreply.github.com>
+AuthorDate: Thu May 7 14:48:09 2026 +0900
+Commit:     GitHub <noreply@github.com>
+CommitDate: Thu May 7 14:48:09 2026 +0900
+
+    Initial commit
