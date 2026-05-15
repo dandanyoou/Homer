@@ -295,7 +295,7 @@
 
             <div class="button-group">
                 <button class="action-btn btn-compress" onclick="compress()">🦣 Caveman으로 압축</button>
-                <button class="action-btn btn-copy" onclick="copyOutput('caveman-output')">복사</button>
+                <button class="action-btn btn-copy" onclick="copyOutput('caveman-output', event)">복사</button>
             </div>
 
             <div class="stats">
@@ -357,7 +357,7 @@
 
             <div class="button-group">
                 <button class="action-btn btn-compress" onclick="compressHomer()">🍩 Homer로 압축</button>
-                <button class="action-btn btn-copy" onclick="copyOutput('homer-output')">복사</button>
+                <button class="action-btn btn-copy" onclick="copyOutput('homer-output', event)">복사</button>
             </div>
 
             <div class="stats">
@@ -444,19 +444,34 @@
             document.getElementById('homer-detected').textContent = result.stats.format;
         }
 
-        // 통합 복사 함수
-        function copyOutput(elementId) {
+        // 통합 복사 함수 — 동기적으로 btn 캡처 후 clipboard 시도, 실패 시 execCommand fallback
+        function copyOutput(elementId, evt) {
             const el = document.getElementById(elementId);
             if (!el.value) {
                 alert('복사할 내용이 없습니다');
                 return;
             }
-            navigator.clipboard.writeText(el.value).then(() => {
-                const btn = event.target;
-                const orig = btn.textContent;
-                btn.textContent = '✓ 복사됨!';
-                setTimeout(() => btn.textContent = orig, 2000);
-            });
+            const btn = (evt || window.event).currentTarget || (evt || window.event).target;
+            const orig = btn.textContent;
+            const flash = (msg) => {
+                btn.textContent = msg;
+                setTimeout(() => { btn.textContent = orig; }, 2000);
+            };
+            const fallback = () => {
+                el.removeAttribute('readonly');
+                el.select();
+                let ok = false;
+                try { ok = document.execCommand('copy'); } catch (_) { ok = false; }
+                el.setAttribute('readonly', '');
+                flash(ok ? '✓ 복사됨!' : '복사 실패');
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(el.value)
+                    .then(() => flash('✓ 복사됨!'))
+                    .catch(fallback);
+            } else {
+                fallback();
+            }
         }
 
         function updateHomerInfo() {
