@@ -17,7 +17,9 @@
       "Bash(pip install *)",
       "Bash(homer --format json --stats)",
       "Bash(ls /c/Users/gimda/timetable/backend/ 2>&1 | head -20)",
-      "Bash(git stash *)"
+      "Bash(git stash *)",
+      "Bash(wc -l /Users/test/homer/Homer/*.py /Users/test/homer/Homer/*.js /Users/test/homer/Homer/*.html)",
+      "WebSearch"
     ]
   }
 }
