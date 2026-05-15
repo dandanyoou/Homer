@@ -379,6 +379,12 @@
         cavemanInput.addEventListener('input', () => {
             const text = cavemanInput.value;
             document.getElementById('inputTokens').textContent = estimateTokens(text);
+            if (!text.trim()) {
+                document.getElementById('caveman-output').value = '';
+                document.getElementById('outputTokens').textContent = 0;
+                document.getElementById('ratio').textContent = '0%';
+                document.getElementById('savings').textContent = '₩0';
+            }
         });
 
         // Homer 입력 통계
@@ -386,6 +392,13 @@
         homerInput.addEventListener('input', () => {
             const text = homerInput.value;
             document.getElementById('homerInputTokens').textContent = text.split(/\s+/).filter(w => w).length;
+            if (!text.trim()) {
+                document.getElementById('homer-output').value = '';
+                document.getElementById('homerOutputTokens').textContent = 0;
+                document.getElementById('homerRatio').textContent = '0%';
+                document.getElementById('homerFormat').textContent = '-';
+                document.getElementById('homer-detected').textContent = '자동';
+            }
         });
 
         // Homer 압축
