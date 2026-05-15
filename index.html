@@ -99,25 +99,6 @@
             .content {
                 grid-template-columns: 1fr;
             }
-            .container {
-                padding: 20px;
-            }
-            .controls-row {
-                flex-wrap: wrap;
-            }
-            .controls-row select {
-                flex: 1 1 auto;
-                min-width: 0;
-            }
-            .stats {
-                grid-template-columns: 1fr 1fr;
-            }
-            .stat-label {
-                white-space: nowrap;
-            }
-            .btn-compress {
-                white-space: nowrap;
-            }
         }
 
         .section {
@@ -251,6 +232,30 @@
 
         .controls-row label {
             margin-bottom: 0;
+        }
+
+        /* 모바일 반응형 — 다른 모든 .stats / .controls-row 룰 뒤에 와야 source-order 우선순위가 적용됨 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .controls-row {
+                flex-wrap: wrap;
+            }
+            .controls-row select {
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            .stat-label {
+                white-space: nowrap;
+            }
+            .btn-compress {
+                white-space: normal;
+                line-height: 1.3;
+            }
         }
     </style>
 </head>
