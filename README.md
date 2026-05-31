@@ -1,4 +1,5 @@
-# 🦣🍩 Token Optimizer
+# <img width="736" height="1268" alt="image" src="https://github.com/user-attachments/assets/58173e02-f7c0-487e-92c3-c48744602b14" />
+Homer Token Optimizer
 
 AI 토큰 낭비 종결자. **프롬프트 + CLI 출력**을 한 번에 압축합니다.
 
